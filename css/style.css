@@ -1,0 +1,240 @@
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: #0f172a;
+            color: white;
+            overflow-x: hidden;
+            margin: 0;
+            padding-bottom: 80px; 
+        }
+
+        @media (min-width: 768px) {
+            body {
+                padding-bottom: 0;
+            }
+        }
+
+        /* --- Custom Scrollbar --- */
+        ::-webkit-scrollbar { width: 10px; }
+        ::-webkit-scrollbar-track { background: #0f172a; }
+        ::-webkit-scrollbar-thumb { background: #6366f1; border-radius: 5px; }
+        ::-webkit-scrollbar-thumb:hover { background: #4f46e5; }
+
+        /* --- Three.js Background --- */
+        #canvas-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.6; pointer-events: none;
+        }
+
+        /* --- Glassmorphism Utilities --- */
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        /* --- Desktop Nav Styles --- */
+        .nav-dock {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .nav-spotlight {
+            position: absolute;
+            top: 0; left: 0;
+            width: 60px; height: 60px;
+            background: radial-gradient(circle, rgba(250, 204, 21, 0.4) 0%, transparent 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translate(-50%, -50%);
+            z-index: 0;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+        .nav-dock:hover .nav-spotlight {
+            opacity: 1;
+        }
+
+        .nav-item {
+            position: relative;
+            z-index: 10;
+            transition: transform 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .nav-item:hover {
+            transform: scale(1.2) translateY(-5px);
+            color: #fbbf24; 
+        }
+
+        /* --- Tooltip Styling --- */
+        .nav-tooltip {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%) scale(0.8);
+            background: rgba(15, 23, 42, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #fbbf24;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 100;
+            bottom: 160%;
+        }
+
+        .nav-tooltip::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            border-width: 6px;
+            border-style: solid;
+            top: 100%;
+            border-color: rgba(15, 23, 42, 0.95) transparent transparent transparent;
+        }
+
+        .nav-item:hover .nav-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        @media (min-width: 768px) {
+            .nav-tooltip {
+                bottom: auto;
+                top: 160%;
+            }
+            .nav-tooltip::after {
+                top: auto;
+                bottom: 100%;
+                border-color: transparent transparent rgba(15, 23, 42, 0.95) transparent;
+            }
+        }
+
+        /* --- 3D Card Styles --- */
+        .card-container { perspective: 1000px; }
+        .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+        }
+        .card-content { transform: translateZ(40px); }
+        .card-bg-glow {
+            position: absolute;
+            width: 150px; height: 150px;
+            background: radial-gradient(circle, rgba(99,102,241,0.4) 0%, rgba(0,0,0,0) 70%);
+            border-radius: 50%;
+            pointer-events: none;
+            transform: translateZ(10px);
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .glass-card:hover .card-bg-glow { opacity: 1; }
+
+        /* --- Animations --- */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        .animate-float { animation: float 6s ease-in-out infinite; }
+        .delay-1 { animation-delay: 0s; }
+        .delay-2 { animation-delay: 1s; }
+        .delay-3 { animation-delay: 2s; }
+        .delay-4 { animation-delay: 3s; }
+        .delay-5 { animation-delay: 4s; }
+
+        /* --- Infinite Marquee --- */
+        .marquee-container {
+            overflow: hidden;
+            white-space: nowrap;
+            position: relative;
+        }
+        .marquee-content {
+            display: inline-block;
+            animation: marquee 25s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- Hover Reveal for Projects --- */
+        .project-card { transition: all 0.4s ease; }
+        .project-card:hover { transform: translateY(-10px); border-color: #818cf8; }
+
+        .neon-text { text-shadow: 0 0 10px rgba(99, 102, 241, 0.5), 0 0 20px rgba(99, 102, 241, 0.3); }
+
+        /* FIXED: Mobile Bottom Nav Styles */
+        .mobile-nav {
+            background: rgba(15, 23, 42, 0.95);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .mobile-nav-item {
+            color: #94a3b8;
+            font-size: 0.75rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+        }
+        .mobile-nav-item.active, .mobile-nav-item:hover {
+            color: #fbbf24;
+        }
+        .mobile-nav-item i {
+            font-size: 1.25rem;
+        }
+
+        /* FIXED: Mobile Hero Section Improvements */
+        @media (max-width: 767px) {
+            /* Ensure no horizontal overflow */
+            html, body {
+                max-width: 100%;
+                overflow-x: hidden;
+            }
+            
+            /* Hero section padding adjustments for symmetry */
+            #home .container {
+                padding-left: 1rem;
+                padding-right: 1rem;
+            }
+            
+            /* Better text sizing for mobile */
+            #home h2 {
+                font-size: 2.5rem;
+                line-height: 1.2;
+            }
+            
+            #home h3 {
+                font-size: 1.25rem;
+            }
+            
+            /* Image container adjustments */
+            #home .relative {
+                max-width: 280px;
+                margin: 0 auto;
+            }
+            
+            /* Skills grid improvements for mobile */
+            .grid.grid-cols-1.lg\\:grid-cols-2 {
+                gap: 1rem;
+            }
+            
+            /* Project cards mobile improvements */
+            .project-card {
+                margin-bottom: 1rem;
+            }
+        }
