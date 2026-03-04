@@ -1,6 +1,6 @@
 # Joyal Johnson – Developer Portfolio
 
-🌐 Live Website: https://your-vercel-link.vercel.app  
+🌐 Live Website: https://joyal-johnson-32.vercel.app/ 
 📧 Email: joyaljohnson723@gmail.com  
 💼 LinkedIn: https://linkedin.com/in/joyal-johnson662  
 💻 GitHub: https://github.com/jj662  
